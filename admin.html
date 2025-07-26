@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Add New Article | Dharshan.dev</title>
+    <meta name="description" content="Admin panel to add new blog articles">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <style>
+        * { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+        
+        :root {
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-dark: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            --shadow-card: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-hover: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .gradient-primary { background: var(--gradient-primary); }
+        .gradient-secondary { background: var(--gradient-secondary); }
+        .gradient-accent { background: var(--gradient-accent); }
+        .gradient-dark { background: var(--gradient-dark); }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-glass);
+        }
+        
+        .card-shadow { box-shadow: var(--shadow-card); }
+        .card-hover:hover { 
+            box-shadow: var(--shadow-hover); 
+            transform: translateY(-8px) scale(1.02);
+        }
+        .transition-smooth { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        .mobile-menu { transform: translateX(-100%); transition: transform 0.3s ease; }
+        .mobile-menu.active { transform: translateX(0); }
+        
+        .animate-fade-in { animation: fadeIn 0.8s ease-in-out; }
+        .animate-slide-up { animation: slideUp 0.8s ease-out; }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glow-effect {
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+        
+        .glow-effect:hover {
+            box-shadow: 0 0 30px rgba(102, 126, 234, 0.8);
+        }
+        
+        .form-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-input:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(102, 126, 234, 0.5);
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white min-h-screen">
+    <!-- Animated Background -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float"></div>
+        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" style="animation-delay: -2s;"></div>
+        <div class="absolute top-40 left-40 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" style="animation-delay: -4s;"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="glass-effect sticky top-0 z-50 border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center space-x-3 group">
+                    <div class="p-3 gradient-primary rounded-xl card-shadow group-hover:shadow-lg transition-all duration-300 glow-effect">
+                        <i data-lucide="code-2" class="h-6 w-6 text-white"></i>
+                    </div>
+                    <span class="text-2xl font-black text-gradient">
+                        Dharshan.dev
+                    </span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-white transition-colors px-4 py-2 rounded-lg hover:glass-effect">Home</a>
+                    <a href="blog.html" class="text-gray-300 hover:text-white transition-colors px-4 py-2 rounded-lg hover:glass-effect">Blog</a>
+                    <a href="projects.html" class="text-gray-300 hover:text-white transition-colors px-4 py-2 rounded-lg hover:glass-effect">Projects</a>
+                    <a href="about.html" class="text-gray-300 hover:text-white transition-colors px-4 py-2 rounded-lg hover:glass-effect">About</a>
+                    <a href="contact.html" class="text-gray-300 hover:text-white transition-colors px-4 py-2 rounded-lg hover:glass-effect">Contact</a>
+                    <a href="admin.html" class="text-white font-semibold relative px-4 py-2 rounded-lg glass-effect">
+                        Admin
+                        <div class="absolute -bottom-1 left-0 right-0 h-0.5 gradient-primary rounded-full"></div>
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-gray-300 hover:text-white hover:glass-effect transition-colors">
+                    <i data-lucide="menu" class="h-6 w-6"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="md:hidden mobile-menu fixed top-16 left-0 right-0 glass-effect border-t border-white/10 z-40">
+                <div class="px-4 py-2 space-y-1">
+                    <a href="index.html" class="block px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg">Home</a>
+                    <a href="blog.html" class="block px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg">Blog</a>
+                    <a href="projects.html" class="block px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg">Projects</a>
+                    <a href="about.html" class="block px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg">About</a>
+                    <a href="contact.html" class="block px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg">Contact</a>
+                    <a href="admin.html" class="block px-4 py-3 text-white bg-white/10 rounded-lg font-medium">Admin</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="relative overflow-hidden py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-in">
+            <h1 class="text-5xl sm:text-6xl font-black text-white mb-6">
+                <i data-lucide="settings" class="inline-block w-10 h-10 mr-4"></i>
+                Admin Panel
+            </h1>
+            <p class="text-xl sm:text-2xl text-white/80 max-w-3xl mx-auto">
+                Add new blog articles and manage your content
+            </p>
+        </div>
+    </section>
+
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <!-- Add New Article Form -->
+        <div class="glass-card rounded-2xl card-shadow p-8 mb-8">
+            <h2 class="text-3xl font-bold text-white mb-8">Add New Article</h2>
+            
+            <form id="articleForm" class="space-y-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <label for="title" class="block text-lg font-semibold text-white mb-3">Article Title *</label>
+                        <input type="text" id="title" name="title" required 
+                               class="w-full px-6 py-4 form-input rounded-xl text-white placeholder-white/50 focus:outline-none transition-all duration-300"
+                               placeholder="Enter article title">
+                    </div>
+                    
+                    <div>
+                        <label for="imageUrl" class="block text-lg font-semibold text-white mb-3">Image URL *</label>
+                        <input type="url" id="imageUrl" name="imageUrl" required 
+                               class="w-full px-6 py-4 form-input rounded-xl text-white placeholder-white/50 focus:outline-none transition-all duration-300"
+                               placeholder="https://source.unsplash.com/400x200/?topic">
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="description" class="block text-lg font-semibold text-white mb-3">Short Description *</label>
+                    <textarea id="description" name="description" rows="3" required 
+                              class="w-full px-6 py-4 form-input rounded-xl text-white placeholder-white/50 focus:outline-none transition-all duration-300"
+                              placeholder="Brief description of the article"></textarea>
+                </div>
+                
+                <div>
+                    <label for="content" class="block text-lg font-semibold text-white mb-3">Article Content *</label>
+                    <textarea id="content" name="content" rows="12" required 
+                              class="w-full px-6 py-4 form-input rounded-xl text-white placeholder-white/50 focus:outline-none transition-all duration-300"
+                              placeholder="Write your article content here..."></textarea>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <button type="submit" 
+                            class="inline-flex items-center gap-3 px-8 py-4 gradient-primary text-white font-bold text-lg rounded-xl hover:opacity-90 transition-all duration-300 glow-effect">
+                        <i data-lucide="plus" class="h-5 w-5"></i>
+                        Add Article
+                    </button>
+                    
+                    <button type="button" id="previewBtn" 
+                            class="inline-flex items-center gap-3 px-8 py-4 glass-effect text-white font-bold text-lg rounded-xl hover:bg-white/20 transition-all duration-300 border border-white/20">
+                        <i data-lucide="eye" class="h-5 w-5"></i>
+                        Preview
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Preview Section -->
+        <div id="previewSection" class="glass-card rounded-2xl card-shadow p-8 hidden">
+            <h3 class="text-2xl font-bold text-white mb-6">Article Preview</h3>
+            <div id="previewContent" class="prose prose-invert max-w-none">
+                <!-- Preview content will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Success Message -->
+        <div id="successMessage" class="glass-card rounded-2xl p-6 mb-6 hidden border border-green-500/30">
+            <div class="flex items-center gap-4">
+                <div class="p-2 bg-green-500/20 rounded-lg border border-green-500/30">
+                    <i data-lucide="check-circle" class="h-6 w-6 text-green-400"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white">Article Added Successfully!</h4>
+                    <p class="text-white/70">You can now view it on the blog page.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="glass-effect border-t border-white/10 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="py-8 border-t border-white/10 text-center">
+                <div class="flex items-center justify-center space-x-3 text-sm text-white/60">
+                    <span>© 2025 Dharshan.dev</span>
+                    <span>•</span>
+                    <span>Built with</span>
+                    <i data-lucide="code-2" class="h-4 w-4"></i>
+                    <span>&</span>
+                    <i data-lucide="coffee" class="h-4 w-4"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        if(window.lucide) {
+            lucide.createIcons();
+        }
+
+        // Mobile menu toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        if(btn && menu) {
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('active');
+            });
+        }
+
+        // Form handling
+        const articleForm = document.getElementById('articleForm');
+        const previewBtn = document.getElementById('previewBtn');
+        const previewSection = document.getElementById('previewSection');
+        const previewContent = document.getElementById('previewContent');
+        const successMessage = document.getElementById('successMessage');
+
+        // Preview functionality
+        previewBtn.addEventListener('click', () => {
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            const imageUrl = document.getElementById('imageUrl').value;
+            const content = document.getElementById('content').value;
+
+            if (title && description && imageUrl && content) {
+                previewContent.innerHTML = `
+                    <div class="mb-8">
+                        <img src="${imageUrl}" alt="${title}" class="w-full h-64 object-cover rounded-xl mb-6">
+                        <h1 class="text-4xl font-bold text-white mb-4">${title}</h1>
+                        <p class="text-xl text-white/80 mb-8">${description}</p>
+                        <div class="prose prose-invert max-w-none">
+                            ${content.replace(/\n/g, '<br>')}
+                        </div>
+                    </div>
+                `;
+                previewSection.classList.remove('hidden');
+                lucide.createIcons();
+            } else {
+                // Create a beautiful notification
+                const notification = document.createElement('div');
+                notification.className = 'fixed top-4 right-4 glass-card rounded-xl p-6 z-50 animate-fade-in';
+                notification.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <div class="p-2 bg-yellow-500/20 rounded-lg border border-yellow-500/30">
+                            <i data-lucide="alert-triangle" class="h-6 w-6 text-yellow-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white">Please fill in all fields</h4>
+                            <p class="text-white/70 text-sm">All fields are required before previewing.</p>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
+                lucide.createIcons();
+                
+                // Remove notification after 5 seconds
+                setTimeout(() => {
+                    notification.remove();
+                }, 5000);
+            }
+        });
+
+        // Form submission
+        articleForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(articleForm);
+            const articleData = {
+                title: formData.get('title'),
+                description: formData.get('description'),
+                imageUrl: formData.get('imageUrl'),
+                content: formData.get('content'),
+                date: new Date().toISOString().split('T')[0]
+            };
+
+            // Store in localStorage (for demo purposes)
+            const articles = JSON.parse(localStorage.getItem('blogArticles') || '[]');
+            articles.push(articleData);
+            localStorage.setItem('blogArticles', JSON.stringify(articles));
+
+            // Show success message
+            successMessage.classList.remove('hidden');
+            articleForm.reset();
+            previewSection.classList.add('hidden');
+
+            // Hide success message after 8 seconds
+            setTimeout(() => {
+                successMessage.classList.add('hidden');
+            }, 8000);
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,427 @@
+
+<!-- post-qr-attendance.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Attendance System | Dharshan.dev</title>
+    <meta name="description" content="Learn how to build a QR code attendance system using Python, OpenCV, and MySQL. Step-by-step guide with code examples.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <style>
+        * { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+        
+        :root {
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-dark: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            --shadow-card: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-hover: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .gradient-primary { background: var(--gradient-primary); }
+        .gradient-secondary { background: var(--gradient-secondary); }
+        .gradient-accent { background: var(--gradient-accent); }
+        .gradient-dark { background: var(--gradient-dark); }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-glass);
+        }
+        
+        .card-shadow { box-shadow: var(--shadow-card); }
+        .card-hover:hover { 
+            box-shadow: var(--shadow-hover); 
+            transform: translateY(-8px) scale(1.02);
+        }
+        .transition-smooth { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        .mobile-menu { transform: translateX(-100%); transition: transform 0.3s ease; }
+        .mobile-menu.active { transform: translateX(0); }
+        
+        .animate-fade-in { animation: fadeIn 0.8s ease-in-out; }
+        .animate-slide-up { animation: slideUp 0.8s ease-out; }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glow-effect {
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+        
+        .glow-effect:hover {
+            box-shadow: 0 0 30px rgba(102, 126, 234, 0.8);
+        }
+        
+        .prose-custom {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.8;
+        }
+        
+        .prose-custom h1, .prose-custom h2, .prose-custom h3, .prose-custom h4 {
+            color: white;
+            font-weight: 700;
+        }
+        
+        .prose-custom strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        .prose-custom ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .prose-custom li {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .prose-custom li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white min-h-screen">
+    <!-- Animated Background -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float"></div>
+        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" style="animation-delay: -2s;"></div>
+        <div class="absolute top-40 left-40 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" style="animation-delay: -4s;"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="glass-effect sticky top-0 z-50 border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center space-x-3 group">
+                    <div class="p-3 gradient-primary rounded-xl card-shadow group-hover:shadow-lg transition-all duration-300 glow-effect">
+                        <i data-lucide="code-2" class="h-6 w-6 text-white"></i>
+                    </div>
+                    <span class="text-2xl font-black text-gradient">
+                        Dharshan.dev
+                    </span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-white transition-colors px-4 py-2 rounded-lg hover:glass-effect">Home</a>
+                    <a href="blog.html" class="text-white font-semibold relative px-4 py-2 rounded-lg glass-effect">
+                        Blog
+                        <div class="absolute -bottom-1 left-0 right-0 h-0.5 gradient-primary rounded-full"></div>
+                    </a>
+                    <a href="projects.html" class="text-gray-300 hover:text-white transition-colors px-4 py-2 rounded-lg hover:glass-effect">Projects</a>
+                    <a href="about.html" class="text-gray-300 hover:text-white transition-colors px-4 py-2 rounded-lg hover:glass-effect">About</a>
+                    <a href="contact.html" class="text-gray-300 hover:text-white transition-colors px-4 py-2 rounded-lg hover:glass-effect">Contact</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-gray-300 hover:text-white hover:glass-effect transition-colors">
+                    <i data-lucide="menu" class="h-6 w-6"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="md:hidden mobile-menu fixed top-16 left-0 right-0 glass-effect border-t border-white/10 z-40">
+                <div class="px-4 py-2 space-y-1">
+                    <a href="index.html" class="block px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg">Home</a>
+                    <a href="blog.html" class="block px-4 py-3 text-white bg-white/10 rounded-lg font-medium">Blog</a>
+                    <a href="projects.html" class="block px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg">Projects</a>
+                    <a href="about.html" class="block px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg">About</a>
+                    <a href="contact.html" class="block px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Article Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <article class="glass-card rounded-2xl card-shadow p-8 animate-fade-in">
+            <!-- Article Header -->
+            <header class="mb-12">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="p-3 bg-green-500/20 rounded-xl border border-green-500/30">
+                        <i data-lucide="qr-code" class="h-8 w-8 text-green-400"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-4xl sm:text-5xl font-black text-white mb-4">
+                            Building a QR Code Attendance System
+                        </h1>
+                        <div class="flex items-center gap-4 text-white/70">
+                            <span class="flex items-center gap-2">
+                                <i data-lucide="calendar" class="h-4 w-4"></i>
+                                July 2025
+                            </span>
+                            <span class="flex items-center gap-2">
+                                <i data-lucide="user" class="h-4 w-4"></i>
+                                Dharshan V
+                            </span>
+                            <span class="flex items-center gap-2">
+                                <i data-lucide="clock" class="h-4 w-4"></i>
+                                8 min read
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <img src="https://source.unsplash.com/1200x400/?qr-code,attendance" 
+                     class="w-full h-64 sm:h-80 object-cover rounded-2xl mb-8" 
+                     alt="QR Code Attendance System">
+            </header>
+
+            <!-- Article Body -->
+            <div class="prose-custom text-lg leading-relaxed">
+                <p class="mb-8 text-xl">
+                    In this comprehensive guide, I'll show you how to build a <strong>QR Code Attendance System</strong> using Python, OpenCV, and MySQL. This project combines computer vision, database management, and GUI development.
+                </p>
+
+                <h2 class="text-3xl font-bold text-white mb-6 mt-12">Project Overview</h2>
+                <p class="mb-6">
+                    The QR Code Attendance System automates the process of tracking student or employee attendance by scanning QR codes. Here's what we'll build:
+                </p>
+
+                <div class="space-y-6 mb-12">
+                    <div class="glass-card rounded-xl p-6 border border-white/10">
+                        <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-3">
+                            <span class="p-2 bg-blue-500/20 rounded-lg border border-blue-500/30">
+                                <i data-lucide="camera" class="h-5 w-5 text-blue-400"></i>
+                            </span>
+                            QR Code Scanner
+                        </h3>
+                        <p class="text-white/80">Real-time QR code detection using OpenCV and webcam integration.</p>
+                    </div>
+
+                    <div class="glass-card rounded-xl p-6 border border-white/10">
+                        <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-3">
+                            <span class="p-2 bg-green-500/20 rounded-lg border border-green-500/30">
+                                <i data-lucide="database" class="h-5 w-5 text-green-400"></i>
+                            </span>
+                            Database Management
+                        </h3>
+                        <p class="text-white/80">Store attendance records in MySQL with student information and timestamps.</p>
+                    </div>
+
+                    <div class="glass-card rounded-xl p-6 border border-white/10">
+                        <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-3">
+                            <span class="p-2 bg-purple-500/20 rounded-lg border border-purple-500/30">
+                                <i data-lucide="monitor" class="h-5 w-5 text-purple-400"></i>
+                            </span>
+                            GUI Interface
+                        </h3>
+                        <p class="text-white/80">User-friendly interface built with Tkinter for easy operation.</p>
+                    </div>
+                </div>
+
+                <h2 class="text-3xl font-bold text-white mb-6 mt-12">Required Libraries</h2>
+                <div class="code-block mb-8">
+                    <pre class="text-green-400"><code>pip install opencv-python
+pip install mysql-connector-python
+pip install qrcode
+pip install pillow
+pip install tkinter</code></pre>
+                </div>
+
+                <h2 class="text-3xl font-bold text-white mb-6 mt-12">Key Features</h2>
+                <ul class="space-y-4 mb-12">
+                    <li><strong>Real-time QR Detection:</strong> Instant scanning and recognition of QR codes</li>
+                    <li><strong>Database Integration:</strong> Automatic storage of attendance records</li>
+                    <li><strong>User Management:</strong> Add, edit, and manage student/employee profiles</li>
+                    <li><strong>Attendance Reports:</strong> Generate detailed attendance reports and analytics</li>
+                    <li><strong>Export Functionality:</strong> Export attendance data to CSV/Excel formats</li>
+                </ul>
+
+                <h2 class="text-3xl font-bold text-white mb-6 mt-12">Implementation Steps</h2>
+                <div class="space-y-8 mb-12">
+                    <div class="glass-card rounded-xl p-6 border border-white/10">
+                        <h3 class="text-2xl font-bold text-white mb-4">1. Database Setup</h3>
+                        <p class="text-white/80 mb-4">First, create the MySQL database and tables for storing attendance data.</p>
+                        <div class="code-block">
+                            <pre class="text-blue-400"><code>CREATE DATABASE attendance_system;
+USE attendance_system;
+
+CREATE TABLE students (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    student_id VARCHAR(20) UNIQUE,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE attendance (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    student_id VARCHAR(20),
+    check_in TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    check_out TIMESTAMP NULL,
+    FOREIGN KEY (student_id) REFERENCES students(student_id)
+);</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-xl p-6 border border-white/10">
+                        <h3 class="text-2xl font-bold text-white mb-4">2. QR Code Generation</h3>
+                        <p class="text-white/80 mb-4">Generate unique QR codes for each student containing their ID.</p>
+                        <div class="code-block">
+                            <pre class="text-blue-400"><code>import qrcode
+import os
+
+def generate_qr_code(student_id, name):
+    qr = qrcode.QRCode(version=1, box_size=10, border=5)
+    qr.add_data(student_id)
+    qr.make(fit=True)
+    
+    img = qr.make_image(fill_color="black", back_color="white")
+    filename = f"qr_codes/{student_id}_{name}.png"
+    img.save(filename)
+    return filename</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-xl p-6 border border-white/10">
+                        <h3 class="text-2xl font-bold text-white mb-4">3. QR Code Scanner</h3>
+                        <p class="text-white/80 mb-4">Implement real-time QR code scanning using OpenCV.</p>
+                        <div class="code-block">
+                            <pre class="text-blue-400"><code>import cv2
+from pyzbar import pyzbar
+
+def scan_qr_code():
+    cap = cv2.VideoCapture(0)
+    
+    while True:
+        ret, frame = cap.read()
+        barcodes = pyzbar.decode(frame)
+        
+        for barcode in barcodes:
+            student_id = barcode.data.decode('utf-8')
+            # Process attendance
+            mark_attendance(student_id)
+            
+        cv2.imshow('QR Scanner', frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+    
+    cap.release()
+    cv2.destroyAllWindows()</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-xl p-6 border border-yellow-500/30 bg-yellow-500/10">
+                    <div class="flex items-start gap-4">
+                        <div class="p-2 bg-yellow-500/20 rounded-lg border border-yellow-500/30">
+                            <i data-lucide="lightbulb" class="h-6 w-6 text-yellow-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold text-white mb-2">Pro Tips</h4>
+                            <ul class="text-white/80 space-y-2">
+                                <li>• Use threading to prevent GUI freezing during scanning</li>
+                                <li>• Implement error handling for database connections</li>
+                                <li>• Add logging for debugging and monitoring</li>
+                                <li>• Consider adding face recognition for additional security</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Article Footer -->
+            <footer class="mt-12 pt-8 border-t border-white/10">
+                <a href="blog.html" class="inline-flex items-center gap-3 px-6 py-3 glass-effect text-white font-semibold rounded-xl hover:bg-white/20 transition-all duration-300 border border-white/20">
+                    <i data-lucide="arrow-left" class="h-5 w-5"></i>
+                    Back to Blog
+                </a>
+            </footer>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-effect border-t border-white/10 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="py-8 border-t border-white/10 text-center">
+                <div class="flex items-center justify-center space-x-3 text-sm text-white/60">
+                    <span>© 2025 Dharshan.dev</span>
+                    <span>•</span>
+                    <span>Built with</span>
+                    <i data-lucide="code-2" class="h-4 w-4"></i>
+                    <span>&</span>
+                    <i data-lucide="coffee" class="h-4 w-4"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!mobileMenuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                mobileMenu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
+

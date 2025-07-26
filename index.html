@@ -12,7 +12,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
@@ -21,194 +21,252 @@
         * { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
         
         :root {
-            --gradient-hero: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
-            --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-dark: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            --shadow-card: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-hover: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
         
-        .gradient-hero { background: var(--gradient-hero); }
+        .gradient-primary { background: var(--gradient-primary); }
+        .gradient-secondary { background: var(--gradient-secondary); }
+        .gradient-accent { background: var(--gradient-accent); }
+        .gradient-dark { background: var(--gradient-dark); }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-glass);
+        }
+        
         .card-shadow { box-shadow: var(--shadow-card); }
-        .card-hover:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
-        .transition-smooth { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card-hover:hover { 
+            box-shadow: var(--shadow-hover); 
+            transform: translateY(-8px) scale(1.02);
+        }
+        .transition-smooth { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         
         .mobile-menu { transform: translateX(-100%); transition: transform 0.3s ease; }
         .mobile-menu.active { transform: translateX(0); }
         
-        .animate-fade-in { animation: fadeIn 0.6s ease-in-out; }
-        .animate-slide-up { animation: slideUp 0.6s ease-out; }
+        .animate-fade-in { animation: fadeIn 0.8s ease-in-out; }
+        .animate-slide-up { animation: slideUp 0.8s ease-out; }
+        .animate-float { animation: float 6s ease-in-out infinite; }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes slideUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
         .grid-pattern {
             background-image: 
-                radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0);
-            background-size: 20px 20px;
+                radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0);
+            background-size: 30px 30px;
+        }
+        
+        .animated-gradient {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glow-effect {
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+        
+        .glow-effect:hover {
+            box-shadow: 0 0 30px rgba(102, 126, 234, 0.8);
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900">
+<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white min-h-screen">
+    <!-- Animated Background -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float"></div>
+        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" style="animation-delay: -2s;"></div>
+        <div class="absolute top-40 left-40 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" style="animation-delay: -4s;"></div>
+    </div>
+
     <!-- Navigation -->
-    <nav class="bg-white/90 backdrop-blur-lg border-b border-gray-200 sticky top-0 z-50">
+    <nav class="glass-effect sticky top-0 z-50 border-b border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
-                <a href="index.html" class="flex items-center space-x-2 group">
-                    <div class="p-2 gradient-hero rounded-lg card-shadow group-hover:shadow-lg transition-all duration-300">
-                        <i data-lucide="code-2" class="h-5 w-5 text-white"></i>
+                <a href="index.html" class="flex items-center space-x-3 group">
+                    <div class="p-3 gradient-primary rounded-xl card-shadow group-hover:shadow-lg transition-all duration-300 glow-effect">
+                        <i data-lucide="code-2" class="h-6 w-6 text-white"></i>
                     </div>
-                    <span class="text-xl font-bold bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
+                    <span class="text-2xl font-black text-gradient">
                         Dharshan.dev
                     </span>
                 </a>
 
                 <!-- Desktop Navigation -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="index.html" class="text-blue-600 font-medium relative px-3 py-2">
+                    <a href="index.html" class="text-white font-semibold relative px-4 py-2 rounded-lg glass-effect">
                         Home
-                        <div class="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-full"></div>
+                        <div class="absolute -bottom-1 left-0 right-0 h-0.5 gradient-primary rounded-full"></div>
                     </a>
-                    <a href="blog.html" class="text-gray-600 hover:text-gray-900 transition-colors px-3 py-2">Blog</a>
-                    <a href="projects.html" class="text-gray-600 hover:text-gray-900 transition-colors px-3 py-2">Projects</a>
-                    <a href="about.html" class="text-gray-600 hover:text-gray-900 transition-colors px-3 py-2">About</a>
-                    <a href="contact.html" class="text-gray-600 hover:text-gray-900 transition-colors px-3 py-2">Contact</a>
+                    <a href="blog.html" class="text-gray-300 hover:text-white transition-colors px-4 py-2 rounded-lg hover:glass-effect">Blog</a>
+                    <a href="projects.html" class="text-gray-300 hover:text-white transition-colors px-4 py-2 rounded-lg hover:glass-effect">Projects</a>
+                    <a href="about.html" class="text-gray-300 hover:text-white transition-colors px-4 py-2 rounded-lg hover:glass-effect">About</a>
+                    <a href="contact.html" class="text-gray-300 hover:text-white transition-colors px-4 py-2 rounded-lg hover:glass-effect">Contact</a>
                 </div>
 
                 <!-- Mobile menu button -->
-                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors">
-                    <i data-lucide="menu" class="h-5 w-5"></i>
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-gray-300 hover:text-white hover:glass-effect transition-colors">
+                    <i data-lucide="menu" class="h-6 w-6"></i>
                 </button>
             </div>
 
             <!-- Mobile Navigation -->
-            <div id="mobile-menu" class="md:hidden mobile-menu fixed top-16 left-0 right-0 bg-white border-t border-gray-200 z-40">
+            <div id="mobile-menu" class="md:hidden mobile-menu fixed top-16 left-0 right-0 glass-effect border-t border-white/10 z-40">
                 <div class="px-4 py-2 space-y-1">
-                    <a href="index.html" class="block px-3 py-2 text-blue-600 bg-blue-50 rounded-lg font-medium">Home</a>
-                    <a href="blog.html" class="block px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg">Blog</a>
-                    <a href="projects.html" class="block px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg">Projects</a>
-                    <a href="about.html" class="block px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg">About</a>
-                    <a href="contact.html" class="block px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg">Contact</a>
+                    <a href="index.html" class="block px-4 py-3 text-white bg-white/10 rounded-lg font-medium">Home</a>
+                    <a href="blog.html" class="block px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg">Blog</a>
+                    <a href="projects.html" class="block px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg">Projects</a>
+                    <a href="about.html" class="block px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg">About</a>
+                    <a href="contact.html" class="block px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg">Contact</a>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative overflow-hidden gradient-hero">
+    <section class="relative overflow-hidden py-24 sm:py-32">
         <!-- Background Pattern -->
-        <div class="absolute inset-0 grid-pattern opacity-20"></div>
+        <div class="absolute inset-0 grid-pattern opacity-10"></div>
         
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center animate-fade-in">
                 <!-- Badge -->
-                <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white/90 text-sm font-medium mb-8">
-                    <i data-lucide="sparkles" class="h-4 w-4"></i>
-                    Welcome to My Dev Blog
+                <div class="inline-flex items-center gap-3 px-6 py-3 glass-effect rounded-full text-white/90 text-sm font-semibold mb-8 glow-effect">
+                    <i data-lucide="sparkles" class="h-5 w-5"></i>
+                    Welcome to the Future of Development
                 </div>
 
                 <!-- Main Heading -->
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-                    Building the Future with
-                    <span class="block bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
-                        Code & Creativity
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-white mb-8 leading-tight">
+                    Building Tomorrow with
+                    <span class="block text-gradient animate-pulse">
+                        Code & Innovation
                     </span>
                 </h1>
 
                 <!-- Subtitle -->
-                <p class="text-xl text-white/80 max-w-3xl mx-auto mb-10 leading-relaxed">
-                    Explore in-depth tutorials, full-stack projects, Python automations, AI tools, 
-                    and real-world experiences from my tech internships. Let's build something amazing together.
+                <p class="text-xl sm:text-2xl text-white/80 max-w-4xl mx-auto mb-12 leading-relaxed">
+                    Dive into cutting-edge tutorials, full-stack projects, AI-powered solutions, 
+                    and real-world experiences from the forefront of technology.
                 </p>
 
                 <!-- CTA Buttons -->
-                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-                    <a href="blog.html" class="inline-flex items-center gap-2 px-8 py-4 bg-white text-blue-600 font-semibold rounded-lg card-shadow hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
+                    <a href="blog.html" class="group inline-flex items-center gap-3 px-8 py-4 gradient-primary text-white font-bold rounded-xl card-shadow hover:card-hover transition-all duration-300 glow-effect">
                         Explore Articles
-                        <i data-lucide="arrow-right" class="h-4 w-4"></i>
+                        <i data-lucide="arrow-right" class="h-5 w-5 transition-transform group-hover:translate-x-1"></i>
                     </a>
                     
-                    <a href="projects.html" class="inline-flex items-center px-8 py-4 border-2 border-white/30 text-white font-semibold rounded-lg hover:bg-white/10 backdrop-blur-sm transition-all duration-300">
+                    <a href="projects.html" class="group inline-flex items-center gap-3 px-8 py-4 glass-effect text-white font-bold rounded-xl hover:bg-white/20 transition-all duration-300 border border-white/20">
                         View Projects
+                        <i data-lucide="external-link" class="h-5 w-5 transition-transform group-hover:scale-110"></i>
                     </a>
                 </div>
 
                 <!-- Stats -->
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 pt-8 border-t border-white/20">
-                    <div class="text-center">
-                        <div class="text-2xl sm:text-3xl font-bold text-white">5+</div>
-                        <div class="text-white/70 text-sm">Articles Written</div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 pt-12 border-t border-white/20">
+                    <div class="text-center group">
+                        <div class="text-3xl sm:text-4xl font-black text-gradient mb-2">5+</div>
+                        <div class="text-white/70 text-sm font-medium">Articles Written</div>
                     </div>
-                    <div class="text-center">
-                        <div class="text-2xl sm:text-3xl font-bold text-white">2+</div>
-                        <div class="text-white/70 text-sm">Projects Built</div>
+                    <div class="text-center group">
+                        <div class="text-3xl sm:text-4xl font-black text-gradient mb-2">2+</div>
+                        <div class="text-white/70 text-sm font-medium">Projects Built</div>
                     </div>
-                    <div class="text-center">
-                        <div class="text-2xl sm:text-3xl font-bold text-white">5k+</div>
-                        <div class="text-white/70 text-sm">Lines of Code</div>
+                    <div class="text-center group">
+                        <div class="text-3xl sm:text-4xl font-black text-gradient mb-2">5k+</div>
+                        <div class="text-white/70 text-sm font-medium">Lines of Code</div>
                     </div>
-                    <div class="text-center">
-                        <div class="text-2xl sm:text-3xl font-bold text-white">5+</div>
-                        <div class="text-white/70 text-sm">Tech Stacks</div>
+                    <div class="text-center group">
+                        <div class="text-3xl sm:text-4xl font-black text-gradient mb-2">5+</div>
+                        <div class="text-white/70 text-sm font-medium">Tech Stacks</div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Bottom Wave -->
-        <div class="absolute bottom-0 left-0 right-0">
-            <svg class="w-full h-12 fill-gray-50" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path>
-            </svg>
-        </div>
     </section>
 
     <!-- Featured Posts Section -->
-    <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div class="text-center mb-12 animate-slide-up">
-            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+    <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center mb-16 animate-slide-up">
+            <h2 class="text-4xl sm:text-5xl font-black text-white mb-6">
                 Latest Articles
             </h2>
-            <p class="text-gray-600 text-lg max-w-2xl mx-auto">
-                Dive into the latest tutorials, project breakdowns, and insights from my development journey.
+            <p class="text-xl text-white/70 max-w-3xl mx-auto">
+                Discover cutting-edge tutorials, project breakdowns, and insights from the future of development.
             </p>
         </div>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Featured Post -->
-            <article class="md:col-span-2 bg-white rounded-xl card-shadow card-hover transition-smooth overflow-hidden">
-                <div class="h-48 gradient-hero flex items-center justify-center relative">
-                    <div class="absolute inset-0 bg-black/20"></div>
-                    <div class="relative z-10 text-white text-xl font-semibold">Full Stack</div>
-                    <span class="absolute top-4 right-4 bg-emerald-500 text-white px-2 py-1 text-xs rounded-full font-medium">Featured</span>
+            <article class="md:col-span-2 glass-card rounded-2xl card-shadow card-hover transition-smooth overflow-hidden group">
+                <div class="h-64 animated-gradient flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-black/30"></div>
+                    <div class="relative z-10 text-white text-3xl font-black">Full Stack</div>
+                    <span class="absolute top-6 right-6 bg-emerald-500 text-white px-4 py-2 text-sm rounded-full font-bold glow-effect">Featured</span>
                 </div>
-                <div class="p-6">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full font-medium">Full Stack</span>
-                        <div class="flex items-center gap-4 text-xs text-gray-500">
-                            <div class="flex items-center gap-1">
-                                <i data-lucide="calendar" class="h-3 w-3"></i>
+                <div class="p-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-4 py-2 bg-blue-500/20 text-blue-300 text-sm rounded-full font-semibold border border-blue-500/30">Full Stack</span>
+                        <div class="flex items-center gap-4 text-sm text-white/60">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="calendar" class="h-4 w-4"></i>
                                 Jan 15, 2025
                             </div>
-                            <div class="flex items-center gap-1">
-                                <i data-lucide="clock" class="h-3 w-3"></i>
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="clock" class="h-4 w-4"></i>
                                 12 min read
                             </div>
                         </div>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-3 hover:text-blue-600 transition-colors">
+                    <h3 class="text-2xl font-bold text-white mb-4 group-hover:text-gradient transition-colors">
                         Building a Full-Stack E-commerce Platform with React & Node.js
                     </h3>
-                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                    <p class="text-white/70 text-base leading-relaxed mb-6">
                         A comprehensive guide to building a modern e-commerce platform from scratch, including authentication, payment processing, and inventory management.
                     </p>
-                    <a href="blog.html" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-500 text-sm font-medium group">
+                    <a href="blog.html" class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 text-sm font-semibold group">
                         Read Article
                         <i data-lucide="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1"></i>
                     </a>
@@ -216,78 +274,78 @@
             </article>
 
             <!-- Regular Posts -->
-            <article class="bg-white rounded-xl card-shadow card-hover transition-smooth overflow-hidden">
-                <div class="h-40 gradient-hero flex items-center justify-center relative">
-                    <div class="absolute inset-0 bg-black/20"></div>
-                    <div class="relative z-10 text-white text-xl font-semibold">Python</div>
+            <article class="glass-card rounded-2xl card-shadow card-hover transition-smooth overflow-hidden group">
+                <div class="h-48 gradient-secondary flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-black/30"></div>
+                    <div class="relative z-10 text-white text-2xl font-black">Python</div>
                 </div>
                 <div class="p-6">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full font-medium">Python</span>
-                        <div class="flex items-center gap-1 text-xs text-gray-500">
-                            <i data-lucide="calendar" class="h-3 w-3"></i>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-yellow-500/20 text-yellow-300 text-sm rounded-full font-semibold border border-yellow-500/30">Python</span>
+                        <div class="flex items-center gap-2 text-sm text-white/60">
+                            <i data-lucide="calendar" class="h-4 w-4"></i>
                             Jan 10, 2025
                         </div>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3 hover:text-blue-600 transition-colors">
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-gradient transition-colors">
                         Top 5 Python Projects for College Students
                     </h3>
-                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                    <p class="text-white/70 text-sm leading-relaxed mb-4">
                         Build your resume with these real-world Python projects that showcase your skills to potential employers.
                     </p>
-                    <a href="blog.html" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-500 text-sm font-medium group">
+                    <a href="blog.html" class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 text-sm font-semibold group">
                         Read Article
                         <i data-lucide="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1"></i>
                     </a>
                 </div>
             </article>
 
-            <article class="bg-white rounded-xl card-shadow card-hover transition-smooth overflow-hidden">
-                <div class="h-40 gradient-hero flex items-center justify-center relative">
-                    <div class="absolute inset-0 bg-black/20"></div>
-                    <div class="relative z-10 text-white text-xl font-semibold">AI/ML</div>
+            <article class="glass-card rounded-2xl card-shadow card-hover transition-smooth overflow-hidden group">
+                <div class="h-48 gradient-accent flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-black/30"></div>
+                    <div class="relative z-10 text-white text-2xl font-black">AI/ML</div>
                 </div>
                 <div class="p-6">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full font-medium">AI/ML</span>
-                        <div class="flex items-center gap-1 text-xs text-gray-500">
-                            <i data-lucide="calendar" class="h-3 w-3"></i>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-purple-500/20 text-purple-300 text-sm rounded-full font-semibold border border-purple-500/30">AI/ML</span>
+                        <div class="flex items-center gap-2 text-sm text-white/60">
+                            <i data-lucide="calendar" class="h-4 w-4"></i>
                             Jan 8, 2025
                         </div>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3 hover:text-blue-600 transition-colors">
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-gradient transition-colors">
                         AI-Powered Code Review Tool with OpenAI
                     </h3>
-                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                    <p class="text-white/70 text-sm leading-relaxed mb-4">
                         Learn how to build an intelligent code review system using OpenAI's API to catch bugs and suggest improvements.
                     </p>
-                    <a href="blog.html" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-500 text-sm font-medium group">
+                    <a href="blog.html" class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 text-sm font-semibold group">
                         Read Article
                         <i data-lucide="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1"></i>
                     </a>
                 </div>
             </article>
 
-            <article class="bg-white rounded-xl card-shadow card-hover transition-smooth overflow-hidden">
-                <div class="h-40 gradient-hero flex items-center justify-center relative">
-                    <div class="absolute inset-0 bg-black/20"></div>
-                    <div class="relative z-10 text-white text-xl font-semibold">Frontend</div>
+            <article class="glass-card rounded-2xl card-shadow card-hover transition-smooth overflow-hidden group">
+                <div class="h-48 gradient-dark flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-black/30"></div>
+                    <div class="relative z-10 text-white text-2xl font-black">Frontend</div>
                 </div>
                 <div class="p-6">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium">Frontend</span>
-                        <div class="flex items-center gap-1 text-xs text-gray-500">
-                            <i data-lucide="calendar" class="h-3 w-3"></i>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-green-500/20 text-green-300 text-sm rounded-full font-semibold border border-green-500/30">Frontend</span>
+                        <div class="flex items-center gap-2 text-sm text-white/60">
+                            <i data-lucide="calendar" class="h-4 w-4"></i>
                             Jan 5, 2025
                         </div>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3 hover:text-blue-600 transition-colors">
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-gradient transition-colors">
                         Modern UI Design with Tailwind CSS
                     </h3>
-                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                    <p class="text-white/70 text-sm leading-relaxed mb-4">
                         Master the art of creating beautiful, responsive interfaces with Tailwind CSS and modern design principles.
                     </p>
-                    <a href="blog.html" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-500 text-sm font-medium group">
+                    <a href="blog.html" class="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 text-sm font-semibold group">
                         Read Article
                         <i data-lucide="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1"></i>
                     </a>
@@ -297,68 +355,68 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200">
+    <footer class="glass-effect border-t border-white/10 mt-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Main Footer Content -->
-            <div class="py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="py-16 grid grid-cols-1 md:grid-cols-4 gap-12">
                 <!-- Brand Section -->
                 <div class="md:col-span-2">
-                    <div class="flex items-center space-x-2 mb-4">
-                        <div class="p-2 gradient-hero rounded-lg">
-                            <i data-lucide="code-2" class="h-5 w-5 text-white"></i>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="p-3 gradient-primary rounded-xl">
+                            <i data-lucide="code-2" class="h-6 w-6 text-white"></i>
                         </div>
-                        <span class="text-xl font-bold bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
+                        <span class="text-2xl font-black text-gradient">
                             Dharshan.dev
                         </span>
                     </div>
-                    <p class="text-gray-600 text-sm leading-relaxed max-w-md mb-6">
-                        A passionate full-stack developer sharing knowledge through tutorials, 
+                    <p class="text-white/70 text-base leading-relaxed max-w-md mb-8">
+                        A passionate full-stack developer pushing the boundaries of technology through innovative tutorials, 
                         project breakdowns, and real-world development experiences.
                     </p>
                     
                     <!-- Social Links -->
                     <div class="flex space-x-4">
-                        <a href="https://github.com/Dharsh606" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 transition-colors" target="_blank">
-                            <i data-lucide="github" class="h-5 w-5"></i>
+                        <a href="https://github.com/Dharsh606" class="p-3 rounded-xl glass-effect text-white/70 hover:text-white hover:glow-effect transition-all duration-300" target="_blank">
+                            <i data-lucide="github" class="h-6 w-6"></i>
                         </a>
-                        <a href="https://www.linkedin.com/in/dharshanvreddy/" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 transition-colors" target="_blank">
-                            <i data-lucide="linkedin" class="h-5 w-5"></i>
+                        <a href="https://www.linkedin.com/in/dharshanvreddy/" class="p-3 rounded-xl glass-effect text-white/70 hover:text-white hover:glow-effect transition-all duration-300" target="_blank">
+                            <i data-lucide="linkedin" class="h-6 w-6"></i>
                         </a>
-                        <a href="https://twitter.com/dharshan_dev" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 transition-colors" target="_blank">
-                            <i data-lucide="twitter" class="h-5 w-5"></i>
+                        <a href="https://twitter.com/dharshan_dev" class="p-3 rounded-xl glass-effect text-white/70 hover:text-white hover:glow-effect transition-all duration-300" target="_blank">
+                            <i data-lucide="twitter" class="h-6 w-6"></i>
                         </a>
-                        <a href="mailto:gurudhaya2536@gmail.com.dev" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 transition-colors">
-                            <i data-lucide="mail" class="h-5 w-5"></i>
+                        <a href="mailto:gurudhaya2536@gmail.com" class="p-3 rounded-xl glass-effect text-white/70 hover:text-white hover:glow-effect transition-all duration-300">
+                            <i data-lucide="mail" class="h-6 w-6"></i>
                         </a>
                     </div>
                 </div>
 
                 <!-- Quick Links -->
                 <div>
-                    <h3 class="font-semibold text-gray-900 mb-4">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">Home</a></li>
-                        <li><a href="blog.html" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">Blog</a></li>
-                        <li><a href="projects.html" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">Projects</a></li>
-                        <li><a href="about.html" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">About</a></li>
+                    <h3 class="font-bold text-white text-lg mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-white/70 hover:text-white text-base transition-colors">Home</a></li>
+                        <li><a href="blog.html" class="text-white/70 hover:text-white text-base transition-colors">Blog</a></li>
+                        <li><a href="projects.html" class="text-white/70 hover:text-white text-base transition-colors">Projects</a></li>
+                        <li><a href="about.html" class="text-white/70 hover:text-white text-base transition-colors">About</a></li>
                     </ul>
                 </div>
 
                 <!-- Categories -->
                 <div>
-                    <h3 class="font-semibold text-gray-900 mb-4">Categories</h3>
-                    <ul class="space-y-2">
-                        <li><a href="blog.html" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">Full Stack</a></li>
-                        <li><a href="blog.html" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">Python</a></li>
-                        <li><a href="blog.html" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">AI/ML</a></li>
-                        <li><a href="blog.html" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">Frontend</a></li>
+                    <h3 class="font-bold text-white text-lg mb-6">Categories</h3>
+                    <ul class="space-y-3">
+                        <li><a href="blog.html" class="text-white/70 hover:text-white text-base transition-colors">Full Stack</a></li>
+                        <li><a href="blog.html" class="text-white/70 hover:text-white text-base transition-colors">Python</a></li>
+                        <li><a href="blog.html" class="text-white/70 hover:text-white text-base transition-colors">AI/ML</a></li>
+                        <li><a href="blog.html" class="text-white/70 hover:text-white text-base transition-colors">Frontend</a></li>
                     </ul>
                 </div>
             </div>
 
             <!-- Bottom Bar -->
-            <div class="py-6 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center">
-                <div class="flex items-center space-x-2 text-sm text-gray-500">
+            <div class="py-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center">
+                <div class="flex items-center space-x-3 text-sm text-white/60">
                     <span>© 2025 Dharshan.dev</span>
                     <span>•</span>
                     <span>Built with</span>
@@ -421,8 +479,8 @@
         // Observe elements with animation classes
         document.querySelectorAll('.animate-slide-up').forEach(el => {
             el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            el.style.transform = 'translateY(50px)';
+            el.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
             observer.observe(el);
         });
     </script>
