@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Dharshan's Dev Blog</title>
+    <meta name="description" content="Explore tutorials, insights, and stories from my development journey. Full-stack development, Python, AI/ML, and more.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <style>
+        * { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+        
+        :root {
+            --gradient-hero: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+            --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .gradient-hero { background: var(--gradient-hero); }
+        .card-shadow { box-shadow: var(--shadow-card); }
+        .card-hover:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+        .transition-smooth { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        .mobile-menu { transform: translateX(-100%); transition: transform 0.3s ease; }
+        .mobile-menu.active { transform: translateX(0); }
+        
+        .filter-btn.active { background: var(--gradient-hero); color: white; }
+        
+        .grid-pattern {
+            background-image: 
+                radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navigation -->
+    <nav class="bg-white/90 backdrop-blur-lg border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center space-x-2 group">
+                    <div class="p-2 gradient-hero rounded-lg card-shadow group-hover:shadow-lg transition-all duration-300">
+                        <i data-lucide="code-2" class="h-5 w-5 text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
+                        Dharshan.dev
+                    </span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-gray-900 transition-colors px-3 py-2">Home</a>
+                    <a href="blog.html" class="text-blue-600 font-medium relative px-3 py-2">
+                        Blog
+                        <div class="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-full"></div>
+                    </a>
+                    <a href="projects.html" class="text-gray-600 hover:text-gray-900 transition-colors px-3 py-2">Projects</a>
+                    <a href="about.html" class="text-gray-600 hover:text-gray-900 transition-colors px-3 py-2">About</a>
+                    <a href="contact.html" class="text-gray-600 hover:text-gray-900 transition-colors px-3 py-2">Contact</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors">
+                    <i data-lucide="menu" class="h-5 w-5"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="md:hidden mobile-menu fixed top-16 left-0 right-0 bg-white border-t border-gray-200 z-40">
+                <div class="px-4 py-2 space-y-1">
+                    <a href="index.html" class="block px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg">Home</a>
+                    <a href="blog.html" class="block px-3 py-2 text-blue-600 bg-blue-50 rounded-lg font-medium">Blog</a>
+                    <a href="projects.html" class="block px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg">Projects</a>
+                    <a href="about.html" class="block px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg">About</a>
+                    <a href="contact.html" class="block px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="gradient-hero py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">
+                Blog Articles
+            </h1>
+            <p class="text-xl text-white/80 max-w-2xl mx-auto">
+                Explore tutorials, insights, and stories from my development journey
+            </p>
+        </div>
+    </section>
+
+    <!-- Search and Filter Section -->
+    <section class="py-8 border-b border-gray-200 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
+                <!-- Search -->
+                <div class="relative flex-1 max-w-md">
+                    <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400"></i>
+                    <input 
+                        type="text" 
+                        id="search-input"
+                        placeholder="Search articles..." 
+                        class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                    >
+                </div>
+
+                <!-- Category Filter -->
+                <div class="flex gap-2 flex-wrap">
+                    <button class="filter-btn active px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors" data-category="all">
+                        All
+                    </button>
+                    <button class="filter-btn px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors" data-category="Full Stack">
+                        Full Stack
+                    </button>
+                    <button class="filter-btn px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors" data-category="Python">
+                        Python
+                    </button>
+                    <button class="filter-btn px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors" data-category="AI/ML">
+                        AI/ML
+                    </button>
+                    <button class="filter-btn px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors" data-category="Frontend">
+                        Frontend
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Articles Grid -->
+    <section class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div id="articles-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Article cards will be populated by JavaScript -->
+        </div>
+
+        <div id="no-results" class="text-center py-12 hidden">
+            <p class="text-gray-500">No articles found matching your criteria.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="p-2 gradient-hero rounded-lg">
+                            <i data-lucide="code-2" class="h-5 w-5 text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
+                            Dharshan.dev
+                        </span>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed max-w-md mb-6">
+                        A passionate full-stack developer sharing knowledge through tutorials and real-world development experiences.
+                    </p>
+                    
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/Dharsh606" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 transition-colors" target="_blank">
+                            <i data-lucide="github" class="h-5 w-5"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/dharshanvreddy/" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 transition-colors" target="_blank">
+                            <i data-lucide="linkedin" class="h-5 w-5"></i>
+                        </a>
+                        <a href="mailto:gurudhaya2536@gmail.com" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 transition-colors">
+                            <i data-lucide="mail" class="h-5 w-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-semibold text-gray-900 mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">Home</a></li>
+                        <li><a href="blog.html" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">Blog</a></li>
+                        <li><a href="projects.html" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">Projects</a></li>
+                        <li><a href="about.html" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">About</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="font-semibold text-gray-900 mb-4">Categories</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">Full Stack</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">Python</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">AI/ML</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">Frontend</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="py-6 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center">
+                <div class="flex items-center space-x-2 text-sm text-gray-500">
+                    <span>© 2025 Dharshan.dev</span>
+                    <span>•</span>
+                    <span>Built with</span>
+                    <i data-lucide="code-2" class="h-4 w-4"></i>
+                    <span>&</span>
+                    <i data-lucide="coffee" class="h-4 w-4"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Blog posts data
+        const blogPosts = [
+            {
+                title: "Building a Full-Stack E-commerce Platform with React & Node.js",
+                excerpt: "A comprehensive guide to building a modern e-commerce platform from scratch, including authentication, payment processing, and inventory management.",
+                date: "Jan 15, 2025",
+                readTime: "12 min read",
+                category: "Full Stack",
+                views: 2340,
+                slug: "fullstack-ecommerce-platform"
+            },
+            {
+                title: "Top 5 Python Projects for College Students",
+                excerpt: "Build your resume with these real-world Python projects that showcase your skills to potential employers.",
+                date: "Jan 10, 2025",
+                readTime: "8 min read",
+                category: "Python",
+                views: 1890,
+                slug: "python-projects-college-students"
+            },
+            {
+                title: "AI-Powered Code Review Tool with OpenAI",
+                excerpt: "Learn how to build an intelligent code review system using OpenAI's API to catch bugs and suggest improvements.",
+                date: "Jan 8, 2025",
+                readTime: "15 min read",
+                category: "AI/ML",
+                views: 3120,
+                slug: "ai-code-review-tool"
+            },
+            {
+                title: "Modern UI Design with Tailwind CSS",
+                excerpt: "Master the art of creating beautiful, responsive interfaces with Tailwind CSS and modern design principles.",
+                date: "Jan 5, 2025",
+                readTime: "10 min read",
+                category: "Frontend",
+                views: 1650,
+                slug: "modern-ui-tailwind"
+            },
+            {
+                title: "Setting Up CI/CD Pipeline with GitHub Actions",
+                excerpt: "Automate your deployment process with GitHub Actions and learn best practices for continuous integration.",
+                date: "Jan 3, 2025",
+                readTime: "14 min read",
+                category: "DevOps",
+                views: 2100,
+                slug: "github-actions-cicd"
+            },
+            {
+                title: "Building REST APIs with Express.js and MongoDB",
+                excerpt: "Complete guide to building scalable backend APIs with Express.js, MongoDB, and proper authentication.",
+                date: "Dec 28, 2024",
+                readTime: "11 min read",
+                category: "Backend",
+                views: 1780,
+                slug: "express-mongodb-api"
+            }
+        ];
+
+        // Category colors
+        const categoryColors = {
+            'Full Stack': 'bg-blue-100 text-blue-800',
+            'Python': 'bg-yellow-100 text-yellow-800',
+            'AI/ML': 'bg-purple-100 text-purple-800',
+            'Frontend': 'bg-green-100 text-green-800',
+            'Backend': 'bg-red-100 text-red-800',
+            'DevOps': 'bg-gray-100 text-gray-800'
+        };
+
+        // Initialize page
+        let currentCategory = 'all';
+        let searchTerm = '';
+
+        function renderArticles() {
+            const grid = document.getElementById('articles-grid');
+            const noResults = document.getElementById('no-results');
+            
+            const filteredPosts = blogPosts.filter(post => {
+                const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                    post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
+                const matchesCategory = currentCategory === 'all' || post.category === currentCategory;
+                return matchesSearch && matchesCategory;
+            });
+
+            if (filteredPosts.length === 0) {
+                grid.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            noResults.classList.add('hidden');
+            
+            grid.innerHTML = filteredPosts.map(post => `
+                <article class="bg-white rounded-xl card-shadow card-hover transition-smooth overflow-hidden">
+                    <div class="h-40 gradient-hero flex items-center justify-center relative">
+                        <div class="absolute inset-0 bg-black/20"></div>
+                        <div class="relative z-10 text-white text-xl font-semibold">${post.category}</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2 py-1 ${categoryColors[post.category] || 'bg-gray-100 text-gray-800'} text-xs rounded-full font-medium">${post.category}</span>
+                            <div class="flex items-center gap-4 text-xs text-gray-500">
+                                <div class="flex items-center gap-1">
+                                    <i data-lucide="calendar" class="h-3 w-3"></i>
+                                    ${post.date}
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <i data-lucide="clock" class="h-3 w-3"></i>
+                                    ${post.readTime}
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <i data-lucide="eye" class="h-3 w-3"></i>
+                                    ${post.views}
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3 hover:text-blue-600 transition-colors">
+                            ${post.title}
+                        </h3>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                            ${post.excerpt}
+                        </p>
+                        <a href="#" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-500 text-sm font-medium group">
+                            Read Article
+                            <i data-lucide="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </article>
+            `).join('');
+
+            // Re-initialize Lucide icons
+            lucide.createIcons();
+        }
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!mobileMenuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                mobileMenu.classList.remove('active');
+            }
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('search-input');
+        searchInput.addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            renderArticles();
+        });
+
+        // Filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                // Update current category
+                currentCategory = btn.dataset.category;
+                
+                // Re-render articles
+                renderArticles();
+            });
+        });
+
+        // Initial render
+        renderArticles();
+    </script>
+</body>
+</html>

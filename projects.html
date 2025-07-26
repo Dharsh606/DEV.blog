@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Dharshan's Dev Blog</title>
+    <meta name="description" content="A showcase of applications I've built, from full-stack web apps to AI-powered tools and automation scripts.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <style>
+        * { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+        
+        :root {
+            --gradient-hero: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+            --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .gradient-hero { background: var(--gradient-hero); }
+        .card-shadow { box-shadow: var(--shadow-card); }
+        .card-hover:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+        .transition-smooth { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        .mobile-menu { transform: translateX(-100%); transition: transform 0.3s ease; }
+        .mobile-menu.active { transform: translateX(0); }
+        
+        .status-completed { background-color: #10b981; }
+        .status-progress { background-color: #f59e0b; }
+        .status-planned { background-color: #6b7280; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navigation -->
+    <nav class="bg-white/90 backdrop-blur-lg border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center space-x-2 group">
+                    <div class="p-2 gradient-hero rounded-lg card-shadow group-hover:shadow-lg transition-all duration-300">
+                        <i data-lucide="code-2" class="h-5 w-5 text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
+                        Dharshan.dev
+                    </span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-gray-900 transition-colors px-3 py-2">Home</a>
+                    <a href="blog.html" class="text-gray-600 hover:text-gray-900 transition-colors px-3 py-2">Blog</a>
+                    <a href="projects.html" class="text-blue-600 font-medium relative px-3 py-2">
+                        Projects
+                        <div class="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-full"></div>
+                    </a>
+                    <a href="about.html" class="text-gray-600 hover:text-gray-900 transition-colors px-3 py-2">About</a>
+                    <a href="contact.html" class="text-gray-600 hover:text-gray-900 transition-colors px-3 py-2">Contact</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors">
+                    <i data-lucide="menu" class="h-5 w-5"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="md:hidden mobile-menu fixed top-16 left-0 right-0 bg-white border-t border-gray-200 z-40">
+                <div class="px-4 py-2 space-y-1">
+                    <a href="index.html" class="block px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg">Home</a>
+                    <a href="blog.html" class="block px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg">Blog</a>
+                    <a href="projects.html" class="block px-3 py-2 text-blue-600 bg-blue-50 rounded-lg font-medium">Projects</a>
+                    <a href="about.html" class="block px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg">About</a>
+                    <a href="contact.html" class="block px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="gradient-hero py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">
+                My Projects
+            </h1>
+            <p class="text-xl text-white/80 max-w-2xl mx-auto">
+                A showcase of applications I've built, from full-stack web apps to AI-powered tools
+            </p>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+                <div>
+                    <div class="text-3xl font-bold text-gray-900" id="completed-count">2</div>
+                    <div class="text-gray-600 text-sm">Completed</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-gray-900" id="progress-count">2</div>
+                    <div class="text-gray-600 text-sm">In Progress</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-gray-900" id="planned-count">2</div>
+                    <div class="text-gray-600 text-sm">Planned</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-gray-900" id="tech-count">20+</div>
+                    <div class="text-gray-600 text-sm">Technologies</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Sections -->
+    <section class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <!-- Completed Projects -->
+        <div class="mb-16">
+            <div class="flex items-center gap-3 mb-8">
+                <h2 class="text-2xl font-bold text-gray-900">Completed Projects</h2>
+                <span class="px-2 py-1 status-completed text-white text-sm rounded-full font-medium">2</span>
+            </div>
+            <div id="completed-projects" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+
+        <!-- In Progress Projects -->
+        <div class="mb-16">
+            <div class="flex items-center gap-3 mb-8">
+                <h2 class="text-2xl font-bold text-gray-900">In Progress</h2>
+                <span class="px-2 py-1 status-progress text-white text-sm rounded-full font-medium">2</span>
+            </div>
+            <div id="progress-projects" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+
+        <!-- Planned Projects -->
+        <div>
+            <div class="flex items-center gap-3 mb-8">
+                <h2 class="text-2xl font-bold text-gray-900">Coming Soon</h2>
+                <span class="px-2 py-1 status-planned text-white text-sm rounded-full font-medium">2</span>
+            </div>
+            <div id="planned-projects" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="p-2 gradient-hero rounded-lg">
+                            <i data-lucide="code-2" class="h-5 w-5 text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
+                            Dharshan.dev
+                        </span>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed max-w-md mb-6">
+                        A passionate full-stack developer sharing knowledge through tutorials and real-world development experiences.
+                    </p>
+                    
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/Dharsh606" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 transition-colors" target="_blank">
+                            <i data-lucide="github" class="h-5 w-5"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/dharshanvreddy/" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 transition-colors" target="_blank">
+                            <i data-lucide="linkedin" class="h-5 w-5"></i>
+                        </a>
+                        <a href="mailto:gurudhaya2536@gmail.com" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 transition-colors">
+                            <i data-lucide="mail" class="h-5 w-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-semibold text-gray-900 mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">Home</a></li>
+                        <li><a href="blog.html" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">Blog</a></li>
+                        <li><a href="projects.html" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">Projects</a></li>
+                        <li><a href="about.html" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">About</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="font-semibold text-gray-900 mb-4">Categories</h3>
+                    <ul class="space-y-2">
+                        <li><a href="blog.html" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">Full Stack</a></li>
+                        <li><a href="blog.html" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">Python</a></li>
+                        <li><a href="blog.html" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">AI/ML</a></li>
+                        <li><a href="blog.html" class="text-gray-600 hover:text-gray-900 text-sm transition-colors">Frontend</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="py-6 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center">
+                <div class="flex items-center space-x-2 text-sm text-gray-500">
+                    <span>© 2025 Dharshan.dev</span>
+                    <span>•</span>
+                    <span>Built with</span>
+                    <i data-lucide="code-2" class="h-4 w-4"></i>
+                    <span>&</span>
+                    <i data-lucide="coffee" class="h-4 w-4"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Projects data
+        const projects = {
+            completed: [
+                {
+                    title: "RC Spot – E-commerce for RC Cars",
+                    description: "Full-stack responsive e-commerce website with cart, checkout, user authentication, and admin panel. Built with modern web technologies.",
+                    technologies: ["React", "Node.js", "MongoDB", "Tailwind CSS", "Stripe"],
+                    liveUrl: "https://dharsh606.github.io/rcspot/",
+                    githubUrl: "https://github.com/Dharsh606/rcspot"
+                },
+                {
+                    title: "D SkyCast – Weather App",
+                    description: "Real-time weather forecast application using OpenWeatherMap API with location-based services and detailed forecasts.",
+                    technologies: ["React", "TypeScript", "OpenWeatherMap API", "PWA"],
+                    liveUrl: "https://dharsh606.github.io/weather-project/",
+                    githubUrl: "https://github.com/Dharsh606/weather-project"
+                }
+            ],
+            inProgress: [
+                {
+                    title: "AI Code Review Assistant",
+                    description: "Intelligent code review system using OpenAI's API to analyze code quality, suggest improvements, and catch potential bugs.",
+                    technologies: ["Python", "OpenAI API", "FastAPI", "React", "Docker"],
+                    githubUrl: "https://github.com/dharshan/ai-code-review"
+                },
+                {
+                    title: "DevOps Dashboard",
+                    description: "Comprehensive dashboard for monitoring CI/CD pipelines, deployments, and infrastructure metrics across multiple environments.",
+                    technologies: ["Vue.js", "Node.js", "PostgreSQL", "Docker", "Kubernetes"]
+                }
+            ],
+            planned: [
+                {
+                    title: "Smart Task Manager",
+                    description: "AI-powered task management application with priority suggestions, deadline predictions, and productivity analytics.",
+                    technologies: ["Next.js", "Prisma", "PostgreSQL", "TensorFlow.js"]
+                },
+                {
+                    title: "Real-time Chat Platform",
+                    description: "Scalable chat application with real-time messaging, file sharing, voice calls, and team collaboration features.",
+                    technologies: ["React", "Socket.io", "Node.js", "Redis", "WebRTC"]
+                }
+            ]
+        };
+
+        function createProjectCard(project, status) {
+            const statusClass = status === 'completed' ? 'status-completed' : 
+                              status === 'inProgress' ? 'status-progress' : 'status-planned';
+            const statusText = status === 'completed' ? 'Completed' : 
+                             status === 'inProgress' ? 'In Progress' : 'Planned';
+
+            return `
+                <div class="bg-white rounded-xl card-shadow card-hover transition-smooth overflow-hidden">
+                    <div class="h-48 gradient-hero flex items-center justify-center relative">
+                        <div class="absolute inset-0 bg-black/20"></div>
+                        <div class="relative z-10 text-white text-2xl font-semibold">
+                            ${project.title.split(' ').map(word => word[0]).join('').toUpperCase()}
+                        </div>
+                        <span class="absolute top-4 right-4 ${statusClass} text-white px-2 py-1 text-xs rounded-full font-medium">
+                            ${statusText}
+                        </span>
+                    </div>
+
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">
+                            ${project.title}
+                        </h3>
+
+                        <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                            ${project.description}
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            ${project.technologies.map(tech => `
+                                <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full font-medium">${tech}</span>
+                            `).join('')}
+                        </div>
+
+                        <div class="flex gap-3">
+                            ${project.liveUrl ? `
+                                <a href="${project.liveUrl}" target="_blank" class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 gradient-hero text-white text-sm font-medium rounded-lg hover:opacity-90 transition-opacity">
+                                    <i data-lucide="eye" class="h-4 w-4"></i>
+                                    Live Demo
+                                </a>
+                            ` : ''}
+                            ${project.githubUrl ? `
+                                <a href="${project.githubUrl}" target="_blank" class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 border-2 border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors">
+                                    <i data-lucide="github" class="h-4 w-4"></i>
+                                    Code
+                                </a>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProjects() {
+            // Render completed projects
+            document.getElementById('completed-projects').innerHTML = 
+                projects.completed.map(project => createProjectCard(project, 'completed')).join('');
+
+            // Render in-progress projects
+            document.getElementById('progress-projects').innerHTML = 
+                projects.inProgress.map(project => createProjectCard(project, 'inProgress')).join('');
+
+            // Render planned projects
+            document.getElementById('planned-projects').innerHTML = 
+                projects.planned.map(project => createProjectCard(project, 'planned')).join('');
+
+            // Re-initialize Lucide icons
+            lucide.createIcons();
+        }
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!mobileMenuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                mobileMenu.classList.remove('active');
+            }
+        });
+
+        // Initial render
+        renderProjects();
+    </script>
+</body>
+</html>
